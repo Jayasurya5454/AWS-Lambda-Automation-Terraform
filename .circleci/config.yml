@@ -76,13 +76,18 @@ workflows:
       - terraform_plan: # Terraform plan generation job
           requires:
             - terraform_init # Depends on terraform_init job
-      - hold: # Hold job for approval
+      - hold_apply: # Hold job for apply approval
           type: approval
           requires:
             - terraform_plan # Depends on terraform_plan job
       - terraform_apply: # Apply Terraform changes
           requires:
-            - hold # Depends on approval of the hold job
+            - hold_apply # Depends on approval of the hold_apply job
+      - hold_destroy: # Hold job for destroy approval
+          type: approval
+          requires:
+            - terraform_plan # Depends on terraform_plan job
+            - terraform_destroy # Also depends on terraform_destroy job
       - terraform_destroy: # Destroy Terraform resources
           requires:
-            - hold # Depends on approval of the hold job
+            - hold_destroy # Depends on approval of the hold_destroy job
