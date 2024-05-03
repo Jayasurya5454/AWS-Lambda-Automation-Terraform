@@ -42,7 +42,7 @@ resource "aws_vpc" "Test" {
 #   subnet_id              = aws_subnet.Test-sbnet.id
 # }
 
-resource "aws_iam_role" "jais" {
+resource "aws_iam_role" "jai" {
   name                = "role"
   assume_role_policy  = <<EOF
 {
@@ -67,11 +67,11 @@ resource "aws_lambda_function" "on_boarding_lambda" {
 #   s3_bucket = var.config_bucket
 #   s3_key    = var.on_boarding_lambda_config_path
   filename      = "./sum.zip"
-  function_name = "lambda"
+  function_name = "lambdas"
   runtime       = "python3.8"
   handler       = "lambda_function.lambda_handler"
   # layers        = [aws_lambda_layer_version.lambda_layer.arn, aws_lambda_layer_version.lambda_layer_2.arn]
-  role = aws_iam_role.jais.arn
+  role = aws_iam_role.jai.arn
       
 
 }
