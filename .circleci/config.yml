@@ -88,6 +88,4 @@ workflows:
           requires:
             - terraform_plan # Depends on terraform_plan job
             - terraform_destroy # Also depends on terraform_destroy job
-      - terraform_destroy: # Destroy Terraform resources
-          requires:
-            - hold_destroy # Depends on approval of the hold_destroy job
+       # Depends on approval of the hold_destroy job
