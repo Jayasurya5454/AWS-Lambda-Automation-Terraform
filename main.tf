@@ -66,7 +66,7 @@ EOF
 resource "aws_lambda_function" "on_boarding_lambda" {
 #   s3_bucket = var.config_bucket
 #   s3_key    = var.on_boarding_lambda_config_path
-  filename      = "/home/jayasurya/Cloud/aws/sum.zip"
+  filename      = "./sum.zip"
   function_name = "lambda"
   runtime       = "python3.8"
   handler       = "lambda_function.lambda_handler"
