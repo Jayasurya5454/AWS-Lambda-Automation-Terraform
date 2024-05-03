@@ -1,5 +1,58 @@
+version: 2.1
+
 jobs:
-  terraform_destroy:
+  terraform_init: # Job to initialize Terraform
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
+
+      # Install AWS CLI
+      - run:
+          name: Install AWS CLI
+          command: |
+            apk update
+            apk add --no-cache aws-cli
+      # Configure AWS CLI with access key and secret key
+      - run:
+          name: Configure AWS CLI
+          command: |
+            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+
+  terraform_plan: # Job to generate Terraform plan
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
+
+      # Initialize Terraform
+      - run:
+          name: Terraform Init
+          command: terraform init
+
+      # Generate Terraform plan
+      - run:
+          name: Terraform Plan
+          command: terraform plan
+
+  terraform_apply: # Job to apply Terraform changes
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
+
+      # Initialize Terraform
+      - run:
+          name: Terraform Init
+          command: terraform init
+
+      # Apply Terraform changes
+      - run:
+          name: Terraform Apply
+          command: terraform apply -auto-approve
+
+  terraform_destroy: # Job to destroy Terraform resources
     docker:
       - image: hashicorp/terraform:light
     steps:
@@ -14,3 +67,22 @@ jobs:
       - run:
           name: Terraform Destroy
           command: terraform destroy -auto-approve
+
+workflows:
+  version: 2
+  terraform_flow: # Workflow definition
+    jobs:
+      - terraform_init # Initialize Terraform job runs first
+      - terraform_plan: # Terraform plan generation job
+          requires:
+            - terraform_init # Depends on terraform_init job
+      - hold: # Hold job for approval
+          type: approval
+          requires:
+            - terraform_plan # Depends on terraform_plan job
+      - terraform_apply: # Apply Terraform changes
+          requires:
+            - hold # Depends on approval of the hold job
+      - terraform_destroy: # Destroy Terraform resources
+          requires:
+            - hold # Depends on approval of the hold job
