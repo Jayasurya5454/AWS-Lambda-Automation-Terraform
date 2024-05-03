@@ -87,5 +87,5 @@ workflows:
           type: approval
           requires:
             - terraform_plan # Depends on terraform_plan job
-            - terraform_destroy # Also depends on terraform_destroy job
+             # Also depends on terraform_destroy job
        # Depends on approval of the hold_destroy job
