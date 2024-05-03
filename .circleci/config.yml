@@ -1,15 +1,16 @@
-terraform_destroy:
-  docker:
-    - image: hashicorp/terraform:light
-  steps:
-    - checkout
+jobs:
+  terraform_destroy:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
 
-    # Initialize Terraform
-    - run:
-        name: Terraform Init
-        command: terraform init
+      # Initialize Terraform
+      - run:
+          name: Terraform Init
+          command: terraform init
 
-    # Destroy Terraform resources
-    - run:
-        name: Terraform Destroy
-        command: terraform destroy -auto-approve
+      # Destroy Terraform resources
+      - run:
+          name: Terraform Destroy
+          command: terraform destroy -auto-approve
