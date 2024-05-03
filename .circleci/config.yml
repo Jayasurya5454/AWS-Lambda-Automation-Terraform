@@ -86,8 +86,7 @@ workflows:
       - hold_destroy: # Hold job for destroy approval
           type: approval
           requires:
-            - terraform_plan # Depends on terraform_plan job
-            - terraform_destroy # Also depends on terraform_destroy job
+            - terraform_apply # Depends on terraform_apply job
       - terraform_destroy: # Destroy Terraform resources
           requires:
             - hold_destroy # Depends on approval of the hold_destroy job
