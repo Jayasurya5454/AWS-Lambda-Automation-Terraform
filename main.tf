@@ -3,10 +3,10 @@ provider "aws" {
 
 }
 
-resource "aws_vpc" "Tests" {
-  cidr_block = "10.0.0.0/16"
+# resource "aws_vpc" "Tests" {
+#   cidr_block = "10.0.0.0/16"
 
-}
+# }
 
 # resource "aws_security_group" "testgrp" {
 
@@ -42,7 +42,7 @@ resource "aws_vpc" "Tests" {
 #   subnet_id              = aws_subnet.Test-sbnet.id
 # }
 
-resource "aws_iam_role" "jai" {
+resource "aws_iam_role" "jaidemo" {
   name                = "role"
   assume_role_policy  = <<EOF
 {
