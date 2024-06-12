@@ -70,6 +70,7 @@ resource "aws_iam_role" "jaya" {
 EOF
 }
 
+
 resource "aws_lambda_function" "on_boarding_lambda" {
 #   s3_bucket = var.config_bucket
 #   s3_key    = var.on_boarding_lambda_config_path
