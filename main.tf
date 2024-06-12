@@ -49,7 +49,7 @@ terraform {
 #   subnet_id              = aws_subnet.Test-sbnet.id
 # }
 
-resource "aws_iam_role" "jaya" {
+resource "aws_iam_role" "surya" {
   name                = "role"
   assume_role_policy  = <<EOF
 {
@@ -80,7 +80,7 @@ resource "aws_lambda_function" "on_boarding_lambda" {
   handler       = "lambda_function.lambda_handler"
   # layers        = [aws_lambda_layer_version.lambda_layer.arn, aws_lambda_layer_version.lambda_layer_2.arn]
   
-  role = aws_iam_role.jaya.arn
+  role = aws_iam_role.surya.arn
       
 
 }
