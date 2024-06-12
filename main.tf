@@ -50,7 +50,7 @@ terraform {
 # }
 
 resource "aws_iam_role" "surya" {
-  name                = "role"
+  name                = "roles"
   assume_role_policy  = <<EOF
 {
   "Version": "2012-10-17",
