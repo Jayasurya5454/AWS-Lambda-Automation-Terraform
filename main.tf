@@ -2,6 +2,13 @@ provider "aws" {
   region = "ap-south-1"
 
 }
+terraform {
+  backend "s3" {
+    bucket = "tf-rp-states"
+    key    = "jayasurya/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
 
 # resource "aws_vpc" "Tests" {
 #   cidr_block = "10.0.0.0/16"
@@ -42,7 +49,7 @@ provider "aws" {
 #   subnet_id              = aws_subnet.Test-sbnet.id
 # }
 
-resource "aws_iam_role" "kavi" {
+resource "aws_iam_role" "jaya" {
   name                = "role"
   assume_role_policy  = <<EOF
 {
@@ -72,7 +79,7 @@ resource "aws_lambda_function" "on_boarding_lambda" {
   handler       = "lambda_function.lambda_handler"
   # layers        = [aws_lambda_layer_version.lambda_layer.arn, aws_lambda_layer_version.lambda_layer_2.arn]
   
-  role = aws_iam_role.kavi.arn
+  role = aws_iam_role.jaya.arn
       
 
 }
